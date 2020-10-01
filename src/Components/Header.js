@@ -5,8 +5,8 @@ const CATEGORIES = ["breaking-news", "business", "world", "nation", "sports", "t
 const Header = (props) => {
   const [active, setActive] = useState('breaking-news');
 
-  const activeClass = "bg-blue-200 rounded-lg p-2";
-  const inActiveClass = "cursor-pointer";
+  const activeClass = "bg-blue-200 rounded-sm p-2";
+  const inActiveClass = "cursor-pointer px-2";
 
   const onCategoryClick = (e) => {
     setActive(e.target.textContent);
@@ -14,7 +14,7 @@ const Header = (props) => {
   }
 
   return(
-    <div className="flex bg-blue-100 h-16 px-4 text-lg uppercase items-center justify-around">
+    <div className="flex flex-wrap flex-row bg-blue-100 h-auto text-lg uppercase items-center justify-around">
       {
         CATEGORIES.map(category => (
           <div key={category} className={active === category ? activeClass : inActiveClass} onClick={onCategoryClick}>{category}</div>

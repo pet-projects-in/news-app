@@ -13,7 +13,7 @@ function News({articles}) {
   };
 
   return (
-    <div className='flex flex-row flex-wrap'>
+    <div className='flex flex-row flex-wrap justify-center'>
       {articles.map((article, index) => {
         return (
           ifArticleComplete(article) && <Card article={article} key={index} />

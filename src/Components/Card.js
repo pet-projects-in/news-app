@@ -9,7 +9,7 @@ function Card(props) {
 
   return (
     <div
-      className='m-4 w-64  rounded-md shadow-xl hover:shadow-xs hover:border-4 
+      className='m-4 w-3/4 md:w-64 rounded-md shadow-xl hover:shadow-xs hover:border-4 
       hover:border-solid cursor-pointer flex flex-col 
       transition duration-300 transform hover:scale-110'
       onClick={redirectToSource}
