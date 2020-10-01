@@ -6,7 +6,7 @@ import Header from './Components/Header'
 import * as serviceWorker from './serviceWorker';
 import Axios from 'axios';
 
-import { HEADLILNES } from "./Utils/API";
+import { HEADLILNES, TOKEN } from "./Utils/API";
 
 const App = () => {
   const [active, setActive] = useState('breaking-news');
@@ -15,8 +15,28 @@ const App = () => {
     setActive(category);
   }
   const fetchNews = async () => {
-    const response = await Axios.get(`${HEADLILNES}&topic=${active}`);
-    setArticles(response.data.articles);
+    let response;
+    let count = 0;
+    try{
+      response = await fetch(`${HEADLILNES}&token=${TOKEN[0]}&topic=${active}`);
+      while(response.status === 429 || response.status === 401){
+        Array.prototype.rotate = function(n) {
+          while (this.length && n < 0) n += this.length;
+          this.push.apply(this, this.splice(0, n));
+          return this;
+        }
+        TOKEN.rotate(1);
+        count += 1;
+        if(count == TOKEN.length - 1){
+          throw "maximum limit reached";
+        }
+        response = await fetch(`${HEADLILNES}&token=${TOKEN[0]}&topic=${active}`);
+      }
+    } catch(e){
+      alert(e);
+    }
+    response = await response.json();
+    setArticles(response.articles);
   };
 
   useEffect(() => {
