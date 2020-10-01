@@ -1,3 +1,3 @@
-const TOKEN = "b5a2c1d752adec1b86a2b766e97c18be"
+const TOKEN = "2de6a306dec14dbd7d21c920953dff6d"
 
 export const HEADLILNES = `https://gnews.io/api/v4/top-headlines?token=${TOKEN}&lang=en`
