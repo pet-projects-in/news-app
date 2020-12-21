@@ -15,4 +15,4 @@ You will also see any lint errors in the console.
 * To build: yarn build
 * To deploy: firebase deploy
 
-App is live: https://newsapp.petprojects.in
+App is live: https://news.petprojects.in
