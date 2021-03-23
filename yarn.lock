@@ -4038,8 +4038,8 @@ electron-to-chromium@^1.3.571:
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.573.tgz#6a21e13ee894eb441677333d5fe9fa3a449689a1"
   integrity sha512-oypaNmexr8w0m2GX67fGLQ0Xgsd7uXz7GcwaHZ9eW3ZdQ8uA2+V/wXmLdMTk3gcacbqQGAN7CXWG3fOkfKYftw==
 
-elliptic@^6.0.0:
-  version "6.5.3"
+elliptic@^6.5.4:
+  version "6.5.4"
   resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.5.3.tgz#cb59eb2efdaf73a0bd78ccd7015a62ad6e0f93d6"
   integrity sha512-IMqzv5wNQf+E6aHeIqATs0tOLeOTwj1QKbRcS3jBbYkl5oLAserA8yJTT7/VyHUYG91PRmPyeQDObKLPpeS4dw==
   dependencies:
@@ -5876,8 +5876,8 @@ is-string@^1.0.5:
   resolved "https://registry.yarnpkg.com/is-string/-/is-string-1.0.5.tgz#40493ed198ef3ff477b8c7f92f644ec82a5cd3a6"
   integrity sha512-buY6VNRjhQMiF1qWDouloZlQbRhDPCebwxSjxMjxgemYT46YMd2NR0/H+fBhEfWX4A/w9TBJ+ol+okqJKFE6vQ==
 
-is-svg@^3.0.0:
-  version "3.0.0"
+is-svg@^4.2.2:
+  version "4.2.2"
   resolved "https://registry.yarnpkg.com/is-svg/-/is-svg-3.0.0.tgz#9321dbd29c212e5ca99c4fa9794c714bcafa2f75"
   integrity sha512-gi4iHK53LR2ujhLVVj+37Ykh9GLqYHX6JOVXbLAucaG/Cqw9xwdFOjDM2qeifLs1sF1npXXFvDu0r5HNgCMrzQ==
   dependencies:
