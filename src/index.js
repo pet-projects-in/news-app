@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
+import React, { useEffect, useState } from "react";
+import ReactDOM from "react-dom";
 
-import News from './Components/News';
-import Header from './Components/Header';
+import News from "./Components/News";
+import Header from "./Components/Header";
 
-import './index.css';
+import "./index.css";
 
-import { HEADLILNES, TOKEN } from './Utils/API';
+import { HEADLILNES, TOKEN } from "./Utils/API";
 
 const App = () => {
-  const [active, setActive] = useState('breaking-news');
+  const [active, setActive] = useState("breaking-news");
   const [articles, setArticles] = useState([]);
   const handleCatClick = (category) => {
     setActive(category);
@@ -28,7 +28,7 @@ const App = () => {
         TOKEN.rotate(1);
         count += 1;
         if (count == TOKEN.length - 1) {
-          throw 'maximum limit reached';
+          throw "maximum limit reached";
         }
         response = await fetch(
           `${HEADLILNES}&token=${TOKEN[0]}&topic=${active}`
@@ -57,7 +57,7 @@ ReactDOM.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change
