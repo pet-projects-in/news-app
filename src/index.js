@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 
 import News from "./Components/News";
 import Header from "./Components/Header";
@@ -57,11 +57,13 @@ const App = () => {
   );
 };
 
-ReactDOM.render(
+const container = document.getElementById("root");
+const root = createRoot(container);
+
+root.render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>,
-  document.getElementById("root")
+  </React.StrictMode>
 );
 
 // If you want your app to work offline and load faster, you can change
