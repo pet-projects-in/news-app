@@ -6,42 +6,69 @@ import Header from "./Components/Header";
 
 import "./index.css";
 
-import { HEADLILNES, TOKEN } from "./Utils/API";
+import { buildApiUrl } from "./Utils/API";
 
 const App = () => {
   const [active, setActive] = useState("breaking-news");
   const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleCatClick = (category) => {
     setActive(category);
   };
 
-  // Replace Array.prototype.rotate with a helper function
-  const rotateTokens = () => {
-    const firstToken = TOKEN.shift();
-    TOKEN.push(firstToken);
-  };
-
   // Wrap in useCallback to avoid missing dependency warning
   const fetchNews = useCallback(async () => {
-    let response;
-    let count = 0;
+    setLoading(true);
+    setError(null);
+
     try {
-      response = await fetch(`${HEADLILNES}&token=${TOKEN[0]}&topic=${active}`);
-      while (response.status === 429 || response.status === 401) {
-        rotateTokens();
-        count += 1;
-        if (count === TOKEN.length - 1) {
-          throw new Error("maximum limit reached");
-        }
-        response = await fetch(
-          `${HEADLILNES}&token=${TOKEN[0]}&topic=${active}`
-        );
+      const url = buildApiUrl(active);
+      console.log('Fetching from:', url); // Debug log
+
+      // Add timeout to the fetch request
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
+
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+        },
+        signal: controller.signal
+      });
+
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
       }
-      response = await response.json();
-      setArticles(response.articles);
+
+      const data = await response.json();
+
+      if (data && data.articles && Array.isArray(data.articles)) {
+        setArticles(data.articles);
+      } else if (data.error) {
+        throw new Error(data.message || data.error);
+      } else {
+        console.error('Invalid response format:', data);
+        setError('Invalid response format from API');
+      }
+
     } catch (e) {
-      alert(e);
+      console.error('Fetch error:', e);
+
+      if (e.name === 'AbortError') {
+        setError('Request timed out. Please check your internet connection and try again.');
+      } else if (e.message.includes('Failed to fetch')) {
+        setError('Network error: Unable to connect to the news service. Please check your internet connection.');
+      } else {
+        setError(e.message || 'Failed to fetch news. Please try again.');
+      }
+      setArticles([]);
+    } finally {
+      setLoading(false);
     }
   }, [active]);
 
@@ -52,7 +79,29 @@ const App = () => {
   return (
     <div>
       <Header handleCatClick={handleCatClick} />
-      {articles.length > 0 && <News articles={articles} />}
+      {loading && (
+        <div className="flex justify-center items-center p-8">
+          <div className="text-lg">Loading news...</div>
+        </div>
+      )}
+      {error && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mx-4 my-4">
+          <strong className="font-bold">Error: </strong>
+          <span className="block sm:inline">{error}</span>
+          <button
+            onClick={fetchNews}
+            className="mt-2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Retry
+          </button>
+        </div>
+      )}
+      {!loading && !error && articles.length > 0 && <News articles={articles} />}
+      {!loading && !error && articles.length === 0 && (
+        <div className="flex justify-center items-center p-8">
+          <div className="text-lg text-gray-600">No news articles found for this category.</div>
+        </div>
+      )}
     </div>
   );
 };
